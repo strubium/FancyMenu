@@ -47,6 +47,7 @@ import de.keksuccino.konkrete.gui.screens.popup.PopupHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.gui.components.events.GuiEventListener;
+import net.minecraft.client.gui.screens.GenericDirtMessageScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.TitleScreen;
 import net.minecraft.client.gui.screens.worldselection.CreateWorldScreen;
@@ -502,7 +503,7 @@ public class LayoutEditorScreen extends Screen implements ElementFactory {
 
 		this.cachedVanillaWidgetMetas.clear();
 		if (this.layoutTargetScreen != null) {
-			this.cachedVanillaWidgetMetas.addAll(ScreenWidgetDiscoverer.getWidgetsOfScreen(this.layoutTargetScreen, true, false));
+			this.cachedVanillaWidgetMetas.addAll(ScreenWidgetDiscoverer.getWidgetsOfScreen(this.layoutTargetScreen, true));
 		}
 		for (WidgetMeta m : this.cachedVanillaWidgetMetas) {
 			if (m.getWidget() instanceof CustomizableWidget w) {
@@ -1279,10 +1280,16 @@ public class LayoutEditorScreen extends Screen implements ElementFactory {
 	public void closeEditor() {
 		this.saveWidgetSettings();
 		currentInstance = null;
-		if (this.layoutTargetScreen instanceof CreateWorldScreen) {
-			CreateWorldScreen.openFresh(Minecraft.getInstance(), new TitleScreen());
+		if (this.layoutTargetScreen != null) {
+			if (!((IMixinScreen)this.layoutTargetScreen).get_initialized_FancyMenu()) {
+				Minecraft.getInstance().setScreen(this.layoutTargetScreen);
+			} else {
+				Minecraft.getInstance().setScreen(new GenericDirtMessageScreen(Component.literal("Closing editor..")));
+				Minecraft.getInstance().screen = this.layoutTargetScreen;
+				ScreenCustomization.reInitCurrentScreen();
+			}
 		} else {
-			Minecraft.getInstance().setScreen(this.layoutTargetScreen);
+			Minecraft.getInstance().setScreen(null);
 		}
 	}
 
