@@ -1,5 +1,6 @@
 package de.keksuccino.fancymenu.menu.fancy.item.playerentity;
 
+import de.keksuccino.fancymenu.FancyMenu;
 import de.keksuccino.konkrete.input.CharacterFilter;
 import de.keksuccino.konkrete.resources.SelfcleaningDynamicTexture;
 import de.keksuccino.konkrete.resources.WebTextureResourceLocation;
@@ -30,8 +31,8 @@ public class SkinWebTextureResourceLocation extends WebTextureResourceLocation {
         if (!this.loaded) {
             try {
                 if (Minecraft.getMinecraft().getTextureManager() == null) {
-                    System.out.println("################################ WARNING ################################");
-                    System.out.println("Can't load texture '" + this.url + "'! Minecraft TextureManager instance not ready yet!");
+                    FancyMenu.LOGGER.warn("################################ WARNING ################################");
+                    FancyMenu.LOGGER.warn("Can't load texture '" + this.url + "'! Minecraft TextureManager instance not ready yet!");
                     return;
                 }
 
@@ -89,9 +90,9 @@ public class SkinWebTextureResourceLocation extends WebTextureResourceLocation {
                 s.close();
                 this.loaded = true;
             } catch (Exception var5) {
-                System.out.println("######################### ERROR #########################");
-                System.out.println("Can't load texture '" + this.url + "'! Invalid URL!");
-                System.out.println("#########################################################");
+                FancyMenu.LOGGER.error("######################### ERROR #########################");
+                FancyMenu.LOGGER.error("Can't load texture '" + this.url + "'! Invalid URL!");
+                FancyMenu.LOGGER.error("#########################################################");
                 this.loaded = false;
                 var5.printStackTrace();
             }

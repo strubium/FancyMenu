@@ -39,9 +39,9 @@ public class PanoramaHandler {
 						render.preparePanorama();
 						panoramas.put(name, render);
 					} else {
-						System.out.println("############## ERROR [FANCYMENU] ##############");
-						System.out.println("Invalid panorama found: " + f2.getPath());
-						System.out.println("###############################################");
+						FancyMenu.LOGGER.error("############## ERROR [FANCYMENU] ##############");
+                        FancyMenu.LOGGER.error("Invalid panorama found: {}", f2.getPath());
+						FancyMenu.LOGGER.error("###############################################");
 					}
 				}
 			}

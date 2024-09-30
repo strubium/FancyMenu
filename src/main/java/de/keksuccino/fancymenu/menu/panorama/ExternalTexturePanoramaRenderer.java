@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.keksuccino.fancymenu.FancyMenu;
 import de.keksuccino.fancymenu.menu.fancy.helper.ui.compat.RenderSystem;
 import org.lwjgl.util.glu.Project;
 
@@ -51,9 +52,9 @@ public class ExternalTexturePanoramaRenderer extends Gui {
 				if ((l != null) && !l.isEmpty()) {
 					this.name = l.get(0).getEntryValue("name");
 					if (this.name == null) {
-						System.out.println("############## ERROR [FANCYMENU] ##############");
-						System.out.println("Missing 'name' value in properties file for panorama cube: " + this.dir);
-						System.out.println("###############################################");
+						FancyMenu.LOGGER.error("############## ERROR [FANCYMENU] ##############");
+                        FancyMenu.LOGGER.error("Missing 'name' value in properties file for panorama cube: {}", this.dir);
+						FancyMenu.LOGGER.error("###############################################");
 					}
 					String sp = l.get(0).getEntryValue("speed");
 					if ((sp != null) && MathUtils.isFloat(sp)) {
@@ -68,20 +69,20 @@ public class ExternalTexturePanoramaRenderer extends Gui {
 						this.angle = Float.parseFloat(an);
 					}
 				} else {
-					System.out.println("############## ERROR [FANCYMENU] ##############");
-					System.out.println("Missing 'panorama-meta' section in properties file for panorama cube: " + this.dir);
-					System.out.println("###############################################");
+					FancyMenu.LOGGER.error("############## ERROR [FANCYMENU] ##############");
+                    FancyMenu.LOGGER.error("Missing 'panorama-meta' section in properties file for panorama cube: {}", this.dir);
+					FancyMenu.LOGGER.error("###############################################");
 				}
 			} else {
-				System.out.println("############## ERROR [FANCYMENU] ##############");
-				System.out.println("An error happened while trying to get properties for panorama cube: " + this.dir);
-				System.out.println("###############################################");
+				FancyMenu.LOGGER.error("############## ERROR [FANCYMENU] ##############");
+                FancyMenu.LOGGER.error("An error happened while trying to get properties for panorama cube: {}", this.dir);
+				FancyMenu.LOGGER.error("###############################################");
 			}
 			
 		} else {
-			System.out.println("############## ERROR [FANCYMENU] ##############");
-			System.out.println("Properties file not found for panorama cube: " + this.dir);
-			System.out.println("###############################################");
+			FancyMenu.LOGGER.error("############## ERROR [FANCYMENU] ##############");
+            FancyMenu.LOGGER.error("Properties file not found for panorama cube: {}", this.dir);
+			FancyMenu.LOGGER.error("###############################################");
 		}
 	}
 	
@@ -100,9 +101,9 @@ public class ExternalTexturePanoramaRenderer extends Gui {
 						this.pano.add(r);
 						
 					} else {
-						System.out.println("############## ERROR [FANCYMENU] ##############");
-						System.out.println("Missing panorama image 'panorama_" + i + ".png' for panorama cube: " + this.name);
-						System.out.println("###############################################");
+						FancyMenu.LOGGER.error("############## ERROR [FANCYMENU] ##############");
+                        FancyMenu.LOGGER.error("Missing panorama image 'panorama_{}.png' for panorama cube: {}", i, this.name);
+						FancyMenu.LOGGER.error("###############################################");
 						return;
 					}
 					i++;

@@ -9,6 +9,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
 import com.google.common.collect.LinkedListMultimap;
+import de.keksuccino.fancymenu.FancyMenu;
 import de.keksuccino.fancymenu.menu.placeholder.v1.DynamicValueHelper;
 import de.keksuccino.konkrete.input.StringUtils;
 import de.keksuccino.konkrete.localization.Locals;
@@ -221,10 +222,10 @@ public class WebStringCustomizationItem extends CustomizationItemBase {
 					lines.put(s, 1.0F);
 					unscaledWidth = font.getStringWidth(s);
 					unscaledHeight = 10;
-					
-					System.out.println("########################## ERROR ##########################");
-					System.out.println("[FM] Cannot load text content from " + value + "! Invalid URL!");
-					System.out.println("###########################################################");
+
+					FancyMenu.LOGGER.error("########################## ERROR ##########################");
+                    FancyMenu.LOGGER.error("[FM] Cannot load text content from {}! Invalid URL!", value);
+					FancyMenu.LOGGER.error("###########################################################");
 					
 					value = old;
 				}
@@ -274,7 +275,7 @@ public class WebStringCustomizationItem extends CustomizationItemBase {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("Trying alternative method to check for existing url..");
+			FancyMenu.LOGGER.warn("Trying alternative method to check for existing url..");
 			try {
 				URL url = new URL(this.value);
 				HttpURLConnection c = (HttpURLConnection) url.openConnection();

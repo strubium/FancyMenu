@@ -141,17 +141,17 @@ public class FancyMenu {
 	        	Konkrete.addPostLoadingEvent("fancymenu", this::onClientSetup);
 
 				if (isOptifineCompatibilityMode()) {
-					LOGGER.info("[FANCYMENU] Optifine compatibility mode enabled!");
+					LOGGER.info("Optifine compatibility mode enabled!");
 				}
 
-				LOGGER.info("[FANCYMENU] Loading v" + VERSION + " in client-side mode!");
+				LOGGER.info("Loading v" + VERSION + " in client-side mode!");
 
 				if (FancyMenu.config.getOrDefault("allow_level_registry_interactions", false)) {
-					LOGGER.info("[FANCYMENU] Level registry interactions allowed!");
+					LOGGER.info("Level registry interactions allowed!");
 				}
 	        	
 	    	} else {
-				LOGGER.info("[FANCYMENU] Loading v" + VERSION + " in server-side mode!");
+				LOGGER.info("Loading v" + VERSION + " in server-side mode!");
 	    	}
 
 			Packets.registerAll();
@@ -343,14 +343,6 @@ public class FancyMenu {
 
 	public static boolean isOptifineCompatibilityMode() {
 		return Konkrete.isOptifineLoaded;
-	}
-
-	public static boolean isDrippyLoadingScreenLoaded() {
-		try {
-			Class.forName("de.keksuccino.drippyloadingscreen.DrippyLoadingScreen", false, FancyMenu.class.getClassLoader());
-			return true;
-		} catch (Exception e) {}
-		return false;
 	}
 
 	public static boolean isKonkreteLoaded() {

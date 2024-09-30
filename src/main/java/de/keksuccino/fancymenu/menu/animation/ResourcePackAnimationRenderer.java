@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.keksuccino.fancymenu.FancyMenu;
 import de.keksuccino.konkrete.rendering.animation.ExternalTextureAnimationRenderer;
 import de.keksuccino.konkrete.rendering.animation.IAnimationRenderer;
 
@@ -264,7 +265,7 @@ public class ResourcePackAnimationRenderer implements IAnimationRenderer {
                         BufferedImage i = ImageIO.read(in);
                         this.width = i.getWidth();
                         this.height = i.getHeight();
-                        System.out.println("[FANCYMENU] Successfully updated width and height for resource pack animation: " + this.resourceNamespace);
+                        FancyMenu.LOGGER.info("Successfully updated width and height for resource pack animation: {}", this.resourceNamespace);
                         this.sizeSet = true;
                         return true;
                     }

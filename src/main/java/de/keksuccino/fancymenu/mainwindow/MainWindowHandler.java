@@ -51,18 +51,18 @@ public class MainWindowHandler {
 				File i16 = new File(icondir.getPath() + "/icon16x16.png");
 				File i32 = new File(icondir.getPath() + "/icon32x32.png");
 				if (!i16.exists() || !i32.exists()) {
-					System.out.println("## ERROR ## [FANCYMENU] Unable to set custom icons: 'icon16x16.png' or 'icon32x32.png' missing!");
+					FancyMenu.LOGGER.error("Unable to set custom icons: 'icon16x16.png' or 'icon32x32.png' missing!");
 					return;
 				}
 				
 				BufferedImage i16buff = ImageIO.read(i16);
 				if ((i16buff.getHeight() != 16) || (i16buff.getWidth() != 16)) {
-					System.out.println("'## ERROR ## [FANCYMENU] Unable to set custom icons: 'icon16x16.png' not 16x16!");
+					FancyMenu.LOGGER.error("Unable to set custom icons: 'icon16x16.png' not 16x16!");
 					return;
 				}
 				BufferedImage i32buff = ImageIO.read(i32);
 				if ((i32buff.getHeight() != 32) || (i32buff.getWidth() != 32)) {
-					System.out.println("'## ERROR ## [FANCYMENU] Unable to set custom icons: 'icon32x32.png' not 32x32!");
+					FancyMenu.LOGGER.error("Unable to set custom icons: 'icon32x32.png' not 32x32!");
 					return;
 				}
 
@@ -81,8 +81,8 @@ public class MainWindowHandler {
 		        i32bytebuffer.flip();
 		        
 		        Display.setIcon(new ByteBuffer[] {i16bytebuffer, i32bytebuffer});
-		        
-				System.out.println("[FANCYMENU] Custom minecraft icon successfully loaded!");
+
+				FancyMenu.LOGGER.info("Custom minecraft icon successfully loaded!");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

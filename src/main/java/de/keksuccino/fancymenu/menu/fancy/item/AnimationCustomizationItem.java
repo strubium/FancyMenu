@@ -2,6 +2,7 @@ package de.keksuccino.fancymenu.menu.fancy.item;
 
 import java.io.IOException;
 
+import de.keksuccino.fancymenu.FancyMenu;
 import de.keksuccino.fancymenu.menu.animation.AnimationHandler;
 import de.keksuccino.konkrete.properties.PropertiesSection;
 import de.keksuccino.konkrete.rendering.animation.IAnimationRenderer;
@@ -19,8 +20,8 @@ public class AnimationCustomizationItem extends CustomizationItemBase {
 			if ((this.value != null) && AnimationHandler.animationExists(this.value)) {
 				this.renderer = AnimationHandler.getAnimation(this.value);
 			} else {
-				System.out.println("################################ WARNING ################################");
-				System.out.println("ANIMATION NOT FOUND: " + this.value);
+				FancyMenu.LOGGER.warn("################################ WARNING ################################");
+                FancyMenu.LOGGER.warn("ANIMATION NOT FOUND: {}", this.value);
 			}
 		}
 	}

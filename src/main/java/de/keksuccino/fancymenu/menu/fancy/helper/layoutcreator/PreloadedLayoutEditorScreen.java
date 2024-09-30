@@ -933,7 +933,7 @@ public class PreloadedLayoutEditorScreen extends LayoutEditorScreen {
 				}
 			}
 		}
-		System.out.println("[FANCYMENU] ERROR: PRE-LOADED EDITOR: VANILLA BUTTON NOT FOUND!");
+		FancyMenu.LOGGER.error("PRE-LOADED EDITOR: VANILLA BUTTON NOT FOUND!");
 		return null;
 	}
 

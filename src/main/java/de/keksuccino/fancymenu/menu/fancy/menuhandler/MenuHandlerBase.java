@@ -464,12 +464,12 @@ public class MenuHandlerBase {
 		}
 
 		if (!this.preinit) {
-			System.out.println("################ WARNING [FANCYMENU] ################");
-			System.out.println("MenuHandler pre-init skipped! Trying to re-initialize menu!");
-			System.out.println("Menu Type: " + e.getGui().getClass().getName());
-			System.out.println("Menu Handler: " + this.getClass().getName());
-			System.out.println("This probably happened because a mod has overridden a menu with this one.");
-			System.out.println("#####################################################");
+			FancyMenu.LOGGER.warn("################ WARNING [FANCYMENU] ################");
+			FancyMenu.LOGGER.warn("MenuHandler pre-init skipped! Trying to re-initialize menu!");
+            FancyMenu.LOGGER.warn("Menu Type: {}", e.getGui().getClass().getName());
+            FancyMenu.LOGGER.warn("Menu Handler: {}", this.getClass().getName());
+			FancyMenu.LOGGER.warn("This probably happened because a mod has overridden a menu with this one.");
+			FancyMenu.LOGGER.warn("#####################################################");
 			e.getGui().setWorldAndResolution(Minecraft.getMinecraft(), e.getGui().width, e.getGui().height);
 			return;
 		}

@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import de.keksuccino.fancymenu.FancyMenu;
 import de.keksuccino.konkrete.math.MathUtils;
 import de.keksuccino.konkrete.properties.PropertiesSection;
 import de.keksuccino.konkrete.properties.PropertiesSerializer;
@@ -55,9 +56,9 @@ public class ExternalTextureSlideshowRenderer extends Gui {
 				if ((l != null) && !l.isEmpty()) {
 					this.name = l.get(0).getEntryValue("name");
 					if (this.name == null) {
-						System.out.println("############## ERROR [FANCYMENU] ##############");
-						System.out.println("Missing 'name' value in properties file for slideshow: " + this.dir);
-						System.out.println("###############################################");
+						FancyMenu.LOGGER.error("############## ERROR [FANCYMENU] ##############");
+                        FancyMenu.LOGGER.error("Missing 'name' value in properties file for slideshow: {}", this.dir);
+						FancyMenu.LOGGER.error("###############################################");
 					}
 					
 					String dur = l.get(0).getEntryValue("duration");
@@ -95,20 +96,20 @@ public class ExternalTextureSlideshowRenderer extends Gui {
 					}
 					
 				} else {
-					System.out.println("############## ERROR [FANCYMENU] ##############");
-					System.out.println("Missing 'slideshow-meta' section in properties file for slideshow: " + this.dir);
-					System.out.println("###############################################");
+					FancyMenu.LOGGER.error("############## ERROR [FANCYMENU] ##############");
+                    FancyMenu.LOGGER.error("Missing 'slideshow-meta' section in properties file for slideshow: {}", this.dir);
+					FancyMenu.LOGGER.error("###############################################");
 				}
 			} else {
-				System.out.println("############## ERROR [FANCYMENU] ##############");
-				System.out.println("An error happened while trying to get properties for slideshow: " + this.dir);
-				System.out.println("###############################################");
+				FancyMenu.LOGGER.error("############## ERROR [FANCYMENU] ##############");
+                FancyMenu.LOGGER.error("An error happened while trying to get properties for slideshow: {}", this.dir);
+				FancyMenu.LOGGER.error("###############################################");
 			}
 			
 		} else {
-			System.out.println("############## ERROR [FANCYMENU] ##############");
-			System.out.println("Properties file not found for slideshow: " + this.dir);
-			System.out.println("###############################################");
+			FancyMenu.LOGGER.error("############## ERROR [FANCYMENU] ##############");
+            FancyMenu.LOGGER.error("Properties file not found for slideshow: {}", this.dir);
+			FancyMenu.LOGGER.error("###############################################");
 		}
 	}
 	
