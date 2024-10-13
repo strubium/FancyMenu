@@ -65,7 +65,7 @@ public class ButtonCache {
 			}
 			
 			//Don't cache video settings if Optifine is active
-			if ((s != null) && (s instanceof GuiVideoSettings) && FancyMenu.isOptifineCompatibilityMode()) {
+			if ((s != null) && (s instanceof GuiVideoSettings) && FancyMenu.isOptifineLoaded()) {
 				replaced.clear();
 				buttons.clear();
 				MinecraftForge.EVENT_BUS.post(new ButtonCachedEvent(s, new ArrayList<ButtonData>(), false));
@@ -108,7 +108,7 @@ public class ButtonCache {
 		}
 		
 		//Don't update video settings buttons if Optifine is active
-		if ((s != null) && (s instanceof GuiVideoSettings) && FancyMenu.isOptifineCompatibilityMode()) {
+		if ((s != null) && (s instanceof GuiVideoSettings) && FancyMenu.isOptifineLoaded()) {
 			return;
 		}
 
@@ -134,15 +134,15 @@ public class ButtonCache {
 					buttons.put(id.getId(), new ButtonData(button.getButton(), id.getId(), LocaleUtils.getKeyForString(button.getButton().displayString), s));
 				} else {
 					if (FancyMenu.config.getOrDefault("showdebugwarnings", true)) {
-						FancyMenu.LOGGER.warn("");
-						FancyMenu.LOGGER.warn("Overlapping buttons found!");
-                        FancyMenu.LOGGER.warn("At: X={} Y={}", button.x, button.y);
-                        FancyMenu.LOGGER.warn("Labels: {}, {}", button.label, buttons.get(id.getId()).label);
-						FancyMenu.LOGGER.warn("");
-						FancyMenu.LOGGER.warn("FancyMenu found overlapping buttons and wasn't able to generate working IDs for them to make them customizable!");
-						FancyMenu.LOGGER.warn("Please report this to the mod author of FancyMenu and give information about what buttons caused it.");
-						FancyMenu.LOGGER.warn("#####################################################");
-						FancyMenu.LOGGER.warn("");
+						System.out.println("");
+						System.out.println("## WARNING [FANCYMENU]: Overlapping buttons found! ##");
+						System.out.println("At: X=" + button.x + " Y=" + button.y);
+						System.out.println("Labels: " + button.label + ", " + buttons.get(id.getId()).label);
+						System.out.println("");
+						System.out.println("FancyMenu found overlapping buttons and wasn't able to generate working IDs for them to make them customizable!");
+						System.out.println("Please report this to the mod author of FancyMenu and give informations about what buttons caused it.");
+						System.out.println("#####################################################");
+						System.out.println("");
 					}
 				}
 				i++;

@@ -329,11 +329,11 @@ public class ButtonScriptEngine {
 			}
 			
 		} catch (Exception e) {
-			FancyMenu.LOGGER.error("################ ERROR [FANCYMENU] ################");
-			FancyMenu.LOGGER.error("An error happened while trying to execute a button action!");
-            FancyMenu.LOGGER.error("Action: {}", action);
-            FancyMenu.LOGGER.error("Value: {}", value);
-			FancyMenu.LOGGER.error("###################################################");
+			System.out.println("################ ERROR [FANCYMENU] ################");
+			System.out.println("An error happened while trying to execute a button action!");
+			System.out.println("Action: " + action);
+			System.out.println("Value: " + value);
+			System.out.println("###################################################");
 			e.printStackTrace();
 		}
 	}
@@ -406,10 +406,10 @@ public class ButtonScriptEngine {
 							Runtime.getRuntime().exec(s);
 						}
 					} else {
-						FancyMenu.LOGGER.error("############## ERROR [FANCYMENU] ##############");
-						FancyMenu.LOGGER.error("Invalid value for 'runcmd' button action!");
-                        FancyMenu.LOGGER.error("Missing OS name in '{}'!", cmd.replace("%s%", "[").replace("%e%", "]"));
-						FancyMenu.LOGGER.error("###############################################");
+						System.out.println("############## ERROR [FANCYMENU] ##############");
+						System.out.println("Invalid value for 'runcmd' button action!");
+						System.out.println("Missing OS name in '" + cmd.replace("%s%", "[").replace("%e%", "]") + "'!");
+						System.out.println("###############################################");
 					}
 				} else {
 					Runtime.getRuntime().exec(cmd);

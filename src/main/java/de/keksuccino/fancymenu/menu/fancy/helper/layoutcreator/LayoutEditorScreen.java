@@ -1513,7 +1513,7 @@ public class LayoutEditorScreen extends GuiScreen {
 		PopupHandler.displayPopup(new FMTextInputPopup(new Color(0, 0, 0, 0), Locals.localize("helper.editor.ui.layout.saveas.entername"), CharacterFilter.getBasicFilenameCharacterFilter(), 240, (call) -> {
 			try {
 
-				if ((call != null) && (!call.isEmpty())) {
+				if ((call != null) && (call.length() > 0)) {
 
 					String file = FancyMenu.getCustomizationPath().getAbsolutePath().replace("\\", "/")+ "/" + call + ".txt";
 					File f = new File(file);

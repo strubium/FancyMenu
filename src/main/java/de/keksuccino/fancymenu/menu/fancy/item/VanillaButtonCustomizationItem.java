@@ -3,7 +3,6 @@ package de.keksuccino.fancymenu.menu.fancy.item;
 import java.io.File;
 import java.io.IOException;
 
-import de.keksuccino.fancymenu.FancyMenu;
 import de.keksuccino.fancymenu.menu.button.ButtonData;
 import de.keksuccino.fancymenu.menu.fancy.MenuCustomization;
 import de.keksuccino.fancymenu.menu.fancy.menuhandler.MenuHandlerBase;
@@ -44,9 +43,9 @@ public class VanillaButtonCustomizationItem extends CustomizationItemBase {
 							MenuCustomization.registerSound(this.value, this.value);
 						}
 					} else {
-						FancyMenu.LOGGER.error("################### ERROR ###################");
-                        FancyMenu.LOGGER.error("Soundfile '{}' for 'addhoversound' customization action not found!", this.value);
-						FancyMenu.LOGGER.error("#############################################");
+						System.out.println("################### ERROR ###################");
+						System.out.println("[FancyMenu] Soundfile '" + this.value + "'for 'addhoversound' customization action not found!");
+						System.out.println("#############################################");
 						this.value = null;
 					}
 				}

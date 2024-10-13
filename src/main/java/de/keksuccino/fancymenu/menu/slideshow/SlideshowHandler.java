@@ -36,9 +36,9 @@ public class SlideshowHandler {
 						render.prepareSlideshow();
 						slideshows.put(name, render);
 					} else {
-						FancyMenu.LOGGER.error("############## ERROR [FANCYMENU] ##############");
-                        FancyMenu.LOGGER.error("Invalid slideshow found: {}", f2.getPath());
-						FancyMenu.LOGGER.error("###############################################");
+						System.out.println("############## ERROR [FANCYMENU] ##############");
+						System.out.println("Invalid slideshow found: " + f2.getPath());
+						System.out.println("###############################################");
 					}
 				}
 			}

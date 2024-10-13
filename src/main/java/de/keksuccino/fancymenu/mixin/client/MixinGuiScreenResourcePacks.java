@@ -1,6 +1,5 @@
 package de.keksuccino.fancymenu.mixin.client;
 
-import de.keksuccino.fancymenu.FancyMenu;
 import de.keksuccino.fancymenu.menu.animation.AnimationHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreenResourcePacks;
@@ -16,7 +15,7 @@ public class MixinGuiScreenResourcePacks {
 
         minecraft.refreshResources();
 
-        FancyMenu.LOGGER.info("Updating animation sizes..");
+        System.out.println("[FANCYMENU] Updating animation sizes..");
         AnimationHandler.setupAnimationSizes();
 
     }

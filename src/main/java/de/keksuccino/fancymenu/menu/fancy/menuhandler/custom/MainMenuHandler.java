@@ -364,7 +364,7 @@ public class MainMenuHandler extends MenuHandlerBase {
 		
 		if (labels != null) {
 			for(int j = 0; j < labels.size(); ++j) {
-				FancyMenu.LOGGER.info(labels.get(j).toString());
+				System.out.println(labels.get(j).toString());
 				labels.get(j).drawLabel(Minecraft.getMinecraft(), mouseX, mouseY);
 			}
 		}

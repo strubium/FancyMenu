@@ -1,6 +1,5 @@
 package de.keksuccino.fancymenu.menu.fancy.item.playerentity;
 
-import de.keksuccino.fancymenu.FancyMenu;
 import de.keksuccino.konkrete.resources.ExternalTextureResourceLocation;
 import de.keksuccino.konkrete.resources.SelfcleaningDynamicTexture;
 import net.minecraft.client.Minecraft;
@@ -31,8 +30,8 @@ public class SkinExternalTextureResourceLocation extends ExternalTextureResource
         if (!this.loaded) {
             try {
                 if (Minecraft.getMinecraft().getTextureManager() == null) {
-                    FancyMenu.LOGGER.warn("################################ WARNING ################################");
-                    FancyMenu.LOGGER.warn("Can't load texture '{}'! Minecraft TextureManager instance not ready yet!", this.path);
+                    System.out.println("################################ WARNING ################################");
+                    System.out.println("Can't load texture '" + this.path + "'! Minecraft TextureManager instance not ready yet!");
                     return;
                 }
 
