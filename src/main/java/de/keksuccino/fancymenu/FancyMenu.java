@@ -17,7 +17,7 @@ import de.keksuccino.fancymenu.menu.button.VanillaButtonDescriptionHandler;
 import de.keksuccino.fancymenu.menu.button.buttonactions.ButtonActions;
 import de.keksuccino.fancymenu.menu.button.identification.ButtonIdentificator;
 import de.keksuccino.fancymenu.menu.loadingrequirement.v2.requirements.LoadingRequirements;
-import de.keksuccino.fancymenu.menu.placeholder.v1.placeholders.Placeholders;
+import de.keksuccino.fancymenu.menu.placeholder.v2.placeholders.Placeholders;
 import de.keksuccino.fancymenu.menu.fancy.MenuCustomization;
 import de.keksuccino.fancymenu.menu.fancy.customlocals.CustomLocalsHandler;
 import de.keksuccino.fancymenu.menu.fancy.gameintro.GameIntroHandler;
@@ -48,12 +48,11 @@ import net.minecraftforge.fml.relauncher.Side;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-@SuppressWarnings("all")
-@Mod(modid = "fancymenu", acceptedMinecraftVersions="[1.12,1.12.2]", dependencies = "after:randompatches;after:findme;required-after:konkrete@[1.6.0,];required:forge@[14.23.5.2855,]", clientSideOnly = false)
+@Mod(modid = "fancymenu", acceptedMinecraftVersions="[1.12,1.12.2]", dependencies = "after:randompatches;after:findme;required-after:konkrete@[1.6.0,];required:forge@[14.23.5.2855,]")
 public class FancyMenu {
 
 	//TODO CHANGE BEFORE PUBLISHING!!!!
-	public static final boolean IS_DEV_ENVIRONMENT = false;
+	public static final boolean IS_DEV_ENVIRONMENT = true;
 
 	public static final String VERSION = "2.14.9";
 	public static final String MOD_LOADER = "forge";
@@ -65,34 +64,31 @@ public class FancyMenu {
 	public static final File MOD_DIR = new File(getGameDirectory(), "/config/fancymenu");
 	public static final File INSTANCE_DATA_DIR = new File(getGameDirectory(), "/fancymenu_data");
 	public static final File INSTANCE_TEMP_DATA_DIR = new File(INSTANCE_DATA_DIR, "/temp");
-	
-	private static File animationsPath = new File(MOD_DIR, "/animations");
-	private static File customizationPath = new File(MOD_DIR, "/customization");
-	private static File customGuiPath = new File(MOD_DIR, "/customguis");
-	private static File buttonscriptPath = new File(MOD_DIR, "/buttonscripts");
-	private static File panoramaPath = new File(MOD_DIR, "/panoramas");
-	private static File slideshowPath = new File(MOD_DIR, "/slideshows");
+
+	private static final File animationsPath = new File(MOD_DIR, "/animations");
+	private static final File customizationPath = new File(MOD_DIR, "/customization");
+	private static final File customGuiPath = new File(MOD_DIR, "/customguis");
+	private static final File buttonscriptPath = new File(MOD_DIR, "/buttonscripts");
+	private static final File panoramaPath = new File(MOD_DIR, "/panoramas");
+	private static final File slideshowPath = new File(MOD_DIR, "/slideshows");
 
 	public FancyMenu() {
 		try {
 
 			if (isClientSide()) {
 
-				if (!MOD_DIR.isDirectory()) {
-					MOD_DIR.mkdirs();
-				}
-				if (!INSTANCE_DATA_DIR.isDirectory()) {
-					INSTANCE_DATA_DIR.mkdirs();
-				}
+
+				createDirectoryIfNotExists(MOD_DIR);
+				createDirectoryIfNotExists(INSTANCE_DATA_DIR);
 
 	    		//Create all important directories
-	    		animationsPath.mkdirs();
-	    		customizationPath.mkdirs();
-	    		customGuiPath.mkdirs();
-	    		buttonscriptPath.mkdirs();
-	    		panoramaPath.mkdirs();
-	    		slideshowPath.mkdirs();
-	    		
+				createDirectoryIfNotExists(animationsPath);
+				createDirectoryIfNotExists(customizationPath);
+				createDirectoryIfNotExists(customGuiPath);
+				createDirectoryIfNotExists(buttonscriptPath);
+				createDirectoryIfNotExists(panoramaPath);
+				createDirectoryIfNotExists(slideshowPath);
+
 	    		initConfig();
 
 				ClientExecutor.init();
@@ -115,15 +111,15 @@ public class FancyMenu {
 
 	    		AnimationHandler.init();
 	    		AnimationHandler.loadCustomAnimations();
-	    		
+
 	    		PanoramaHandler.init();
-	    		
+
 	    		SlideshowHandler.init();
-	    		
+
 	    		CustomGuiLoader.loadCustomGuis();
-	    		
+
 	    		GameIntroHandler.init();
-	    		
+
 	        	MenuCustomization.init();
 
 				MenuBackgroundTypeRegistry.init();
@@ -131,11 +127,11 @@ public class FancyMenu {
 	        	if (config.getOrDefault("enablehotkeys", true)) {
 	        		Keybinding.init();
 	        	}
-	        	
+
 	        	ButtonScriptEngine.init();
 
 				LastWorldHandler.init();
-	        	
+
 	        	VanillaButtonDescriptionHandler.init();
 
 	        	Konkrete.addPostLoadingEvent("fancymenu", this::onClientSetup);
@@ -149,13 +145,13 @@ public class FancyMenu {
 				if (FancyMenu.config.getOrDefault("allow_level_registry_interactions", false)) {
 					LOGGER.info("[FANCYMENU] Level registry interactions allowed!");
 				}
-	        	
+
 	    	} else {
 				LOGGER.info("[FANCYMENU] Loading v" + VERSION + " in server-side mode!");
 	    	}
 
 			Packets.registerAll();
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -199,26 +195,26 @@ public class FancyMenu {
 				SetupSharingEngine.init();
 
 				CustomLocalsHandler.loadLocalizations();
-				
+
 				GameMusicHandler.init();
-	        	
+
 	        	GuiConstructor.init();
 
 				ServerCache.init();
-	        	
+
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 	}
-	
+
 	private static void initLocals() {
 		String baseresdir = "fmlocals/";
 		File f = new File(MOD_DIR.getPath() + "/locals");
 		if (!f.exists()) {
 			f.mkdirs();
 		}
-		
+
 		if (!IS_DEV_ENVIRONMENT) {
 			Locals.copyLocalsFileToDir(new ResourceLocation("keksuccino", baseresdir + "en_us.local"), "en_us", f.getPath());
 			Locals.copyLocalsFileToDir(new ResourceLocation("keksuccino", baseresdir + "de_de.local"), "de_de", f.getPath());
@@ -231,7 +227,7 @@ public class FancyMenu {
 //			Locals.getLocalsFromFile(new File("../src/main/resources/assets/keksuccino/fmlocals/en_us.local"));
 			Locals.getLocalsFromDir("../src/main/resources/assets/keksuccino/fmlocals");
 		}
-		
+
 		Locals.getLocalsFromDir(f.getPath());
 	}
 
@@ -240,12 +236,12 @@ public class FancyMenu {
 			updateConfig();
 		}
 	}
-	
+
 	public static void updateConfig() {
     	try {
 
 			config = new Config(MOD_DIR.getPath() + "/config.txt");
-    		
+
     		config.registerValue("enablehotkeys", true, "general", "A minecraft restart is required after changing this value.");
     		config.registerValue("playmenumusic", true, "general");
     		config.registerValue("playbackgroundsounds", true, "general", "If menu background sounds added by FancyMenu should be played or not.");
@@ -255,19 +251,19 @@ public class FancyMenu {
     		config.registerValue("showdebugwarnings", true, "general");
 			config.registerValue("forcefullscreen", false, "general");
 			config.registerValue("variables_to_reset_on_launch", "", "general");
-    		
+
     		config.registerValue("showcustomizationbuttons", true, "customization");
 			config.registerValue("advancedmode", false, "customization");
 
 			config.registerValue("copyrightposition", "bottom-right", "mainmenu");
 			config.registerValue("copyrightcolor", "#ffffff", "mainmenu");
-			
+
 			config.registerValue("gameintroanimation", "", "loading");
 			config.registerValue("showanimationloadingstatus", true, "loading");
 			config.registerValue("allowgameintroskip", true, "loading");
 			config.registerValue("customgameintroskiptext", "", "loading");
 			config.registerValue("preloadanimations", true, "loading");
-			
+
 			config.registerValue("customwindowicon", false, "minecraftwindow", "A minecraft restart is required after changing this value.");
 			config.registerValue("customwindowtitle", "", "minecraftwindow", "A minecraft restart is required after changing this value.");
 
@@ -279,60 +275,54 @@ public class FancyMenu {
 			config.registerValue("editordeleteconfirmation", true, "layouteditor");
 			config.registerValue("showgrid", false, "layouteditor");
 			config.registerValue("gridsize", 10, "layouteditor");
-			
+
 			config.registerValue("uiscale", 1.0F, "ui");
 			config.registerValue("show_unicode_warning", true, "ui");
 
 			config.registerValue("allow_level_registry_interactions", true, "compatibility");
-			
+
 			config.syncConfig();
-			
+
 			config.clearUnusedValues();
 
 		} catch (InvalidValueException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static File getAnimationPath() {
 		if (!animationsPath.exists()) {
 			animationsPath.mkdirs();
 		}
 		return animationsPath;
 	}
-	
+
 	public static File getCustomizationPath() {
 		if (!customizationPath.exists()) {
 			customizationPath.mkdirs();
 		}
 		return customizationPath;
 	}
-	
+
 	public static File getCustomGuiPath() {
 		if (!customGuiPath.exists()) {
 			customGuiPath.mkdirs();
 		}
 		return customGuiPath;
 	}
-	
+
 	public static File getButtonScriptPath() {
-		if (!buttonscriptPath.exists()) {
-			buttonscriptPath.mkdirs();
-		}
+		createDirectoryIfNotExists(buttonscriptPath);
 		return buttonscriptPath;
 	}
-	
+
 	public static File getPanoramaPath() {
-		if (!panoramaPath.exists()) {
-			panoramaPath.mkdirs();
-		}
+		createDirectoryIfNotExists(panoramaPath);
 		return panoramaPath;
 	}
 
 	public static File getSlideshowPath() {
-		if (!slideshowPath.exists()) {
-			slideshowPath.mkdirs();
-		}
+		createDirectoryIfNotExists(slideshowPath);
 		return slideshowPath;
 	}
 
@@ -343,14 +333,6 @@ public class FancyMenu {
 
 	public static boolean isOptifineCompatibilityMode() {
 		return Konkrete.isOptifineLoaded;
-	}
-
-	public static boolean isDrippyLoadingScreenLoaded() {
-		try {
-			Class.forName("de.keksuccino.drippyloadingscreen.DrippyLoadingScreen", false, FancyMenu.class.getClassLoader());
-			return true;
-		} catch (Exception e) {}
-		return false;
 	}
 
 	public static boolean isKonkreteLoaded() {
@@ -368,6 +350,12 @@ public class FancyMenu {
 			return Minecraft.getMinecraft().mcDataDir;
 		} else {
 			return new File("");
+		}
+	}
+
+	private static void createDirectoryIfNotExists(File dir) {
+		if (!dir.isDirectory()) {
+			dir.mkdirs();
 		}
 	}
 

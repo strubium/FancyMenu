@@ -65,7 +65,7 @@ public class ButtonCache {
 			}
 			
 			//Don't cache video settings if Optifine is active
-			if ((s != null) && (s instanceof GuiVideoSettings) && FancyMenu.isOptifineLoaded()) {
+			if ((s != null) && (s instanceof GuiVideoSettings) && FancyMenu.isOptifineCompatibilityMode()) {
 				replaced.clear();
 				buttons.clear();
 				MinecraftForge.EVENT_BUS.post(new ButtonCachedEvent(s, new ArrayList<ButtonData>(), false));
@@ -108,7 +108,7 @@ public class ButtonCache {
 		}
 		
 		//Don't update video settings buttons if Optifine is active
-		if ((s != null) && (s instanceof GuiVideoSettings) && FancyMenu.isOptifineLoaded()) {
+		if ((s != null) && (s instanceof GuiVideoSettings) && FancyMenu.isOptifineCompatibilityMode()) {
 			return;
 		}
 
